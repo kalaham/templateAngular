@@ -1,0 +1,117 @@
+<header class="flex flex-col gap-1">
+  <h1 class="text-2xl font-semibold tracking-tight">{{ layout.t('ui.title') }}</h1>
+  <p class="text-muted-foreground text-sm">{{ layout.t('ui.subtitle') }}</p>
+</header>
+
+<section class="grid gap-4 lg:grid-cols-2">
+  <article hlmCard class="gap-4">
+    <h2 hlmCardTitle>{{ layout.t('ui.buttons') }}</h2>
+    <div class="flex flex-wrap gap-2">
+      @for (variant of buttonVariants; track variant) {
+        <button hlmBtn type="button" [variant]="variant">{{ variant }}</button>
+      }
+    </div>
+  </article>
+
+  <article hlmCard class="gap-4">
+    <h2 hlmCardTitle>{{ layout.t('ui.badges') }}</h2>
+    <div class="flex flex-wrap gap-2">
+      @for (variant of badgeVariants; track variant) {
+        <span hlmBadge [variant]="variant">{{ variant }}</span>
+      }
+    </div>
+  </article>
+
+  <article hlmCard class="gap-3">
+    <h2 hlmCardTitle>{{ layout.t('ui.alerts') }}</h2>
+    <div hlmAlert>
+      <h3 hlmAlertTitle>{{ layout.t('ui.alert.title') }}</h3>
+      <p hlmAlertDescription>{{ layout.t('ui.alert.description') }}</p>
+    </div>
+    <div hlmAlert variant="destructive">
+      <h3 hlmAlertTitle>{{ layout.t('ui.alert.destructiveTitle') }}</h3>
+      <p hlmAlertDescription>{{ layout.t('ui.alert.destructiveDescription') }}</p>
+    </div>
+  </article>
+
+  <article hlmCard class="gap-3">
+    <h2 hlmCardTitle>{{ layout.t('ui.progress') }}</h2>
+    <div hlmProgress [value]="68">
+      <div hlmProgressIndicator></div>
+    </div>
+    <div hlmProgress [value]="32">
+      <div hlmProgressIndicator></div>
+    </div>
+    <hlm-alert-dialog>
+      <button hlmAlertDialogTrigger hlmBtn type="button" variant="destructive">
+        {{ layout.t('ui.dialog.trigger') }}
+      </button>
+      <hlm-alert-dialog-content *hlmAlertDialogPortal>
+        <div hlmAlertDialogHeader>
+          <h3 hlmAlertDialogTitle>{{ layout.t('ui.dialog.title') }}</h3>
+          <p hlmAlertDialogDescription>{{ layout.t('ui.dialog.description') }}</p>
+        </div>
+        <div hlmAlertDialogFooter>
+          <button hlmAlertDialogCancel type="button">{{ layout.t('ui.dialog.cancel') }}</button>
+          <button hlmAlertDialogAction type="button">{{ layout.t('ui.dialog.confirm') }}</button>
+        </div>
+      </hlm-alert-dialog-content>
+    </hlm-alert-dialog>
+  </article>
+</section>
+
+<section hlmCard>
+  <div class="grid gap-1">
+    <h2 hlmCardTitle>{{ layout.t('ui.forms') }}</h2>
+    <p hlmCardDescription>{{ layout.t('ui.forms.description') }}</p>
+  </div>
+  <form class="grid gap-4 md:grid-cols-2" [formGroup]="form" (ngSubmit)="save()">
+    <div hlmField>
+      <label hlmFieldLabel for="showcase-name">{{ layout.t('ui.name') }}</label>
+      <input hlmInput id="showcase-name" type="text" formControlName="name" autocomplete="name" />
+      @if (submitted() && form.controls.name.invalid) {
+        <hlm-field-error>{{ layout.t('ui.required') }}</hlm-field-error>
+      }
+    </div>
+
+    <div hlmField>
+      <label hlmFieldLabel for="showcase-role">{{ layout.t('ui.role') }}</label>
+      <hlm-select [value]="role()" (valueChange)="onRole($event)">
+        <hlm-select-trigger class="w-full" id="showcase-role">
+          <hlm-select-value [placeholder]="layout.t('ui.rolePlaceholder')" />
+        </hlm-select-trigger>
+        <hlm-select-content *hlmSelectPortal>
+          <hlm-select-item value="admin">{{ layout.t('ui.role.admin') }}</hlm-select-item>
+          <hlm-select-item value="editor">{{ layout.t('ui.role.editor') }}</hlm-select-item>
+          <hlm-select-item value="viewer">{{ layout.t('ui.role.viewer') }}</hlm-select-item>
+        </hlm-select-content>
+      </hlm-select>
+      @if (submitted() && !role()) {
+        <hlm-field-error>{{ layout.t('ui.required') }}</hlm-field-error>
+      }
+    </div>
+
+    <label class="flex items-center justify-between gap-3 md:col-span-2" hlmField orientation="horizontal">
+      <span hlmFieldLabel>{{ layout.t('ui.alertsSwitch') }}</span>
+      <hlm-switch [checked]="alerts()" (checkedChange)="alerts.set($event)" />
+    </label>
+
+    <div class="flex items-center gap-3 md:col-span-2">
+      <button hlmBtn type="submit">{{ layout.t('ui.submit') }}</button>
+      @if (saved()) {
+        <span class="text-sm">{{ layout.t('ui.saved') }}</span>
+      }
+    </div>
+  </form>
+</section>
+
+<app-data-table
+  [title]="layout.t('ui.table')"
+  [description]="layout.t('ui.table.description')"
+  [columns]="columns()"
+  [rows]="rows"
+  [searchPlaceholder]="layout.t('table.search')"
+  [emptyLabel]="layout.t('table.empty')"
+  [pageLabel]="layout.t('table.page')"
+  [ofLabel]="layout.t('table.of')"
+/>

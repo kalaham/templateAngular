@@ -1,0 +1,65 @@
+<section hlmCard>
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+    <div class="grid gap-1">
+      <h2 hlmCardTitle>{{ title() }}</h2>
+      @if (description()) {
+        <p hlmCardDescription>{{ description() }}</p>
+      }
+    </div>
+    <input
+      hlmInput
+      class="sm:max-w-56"
+      type="search"
+      [placeholder]="searchPlaceholder()"
+      [value]="query()"
+      (input)="onSearch($event)"
+    />
+  </div>
+
+  <div hlmCardContent class="px-0">
+    <div hlmTableContainer>
+      <table hlmTable>
+        <thead hlmTHead>
+          <tr hlmTr>
+            @for (column of columns(); track column.key) {
+              <th hlmTh [class.text-end]="column.align === 'right'">{{ column.header }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody hlmTBody>
+          @for (row of pageRows(); track $index) {
+            <tr hlmTr>
+              @for (column of columns(); track column.key) {
+                <td hlmTd [class.text-end]="column.align === 'right'">{{ cell(row, column.key) }}</td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (pageRows().length === 0) {
+      <p class="text-muted-foreground px-4 py-8 text-center text-sm">{{ emptyLabel() }}</p>
+    }
+  </div>
+
+  <div hlmCardFooter class="justify-between">
+    <span class="text-muted-foreground text-sm">
+      {{ pageLabel() }} {{ currentPage() }} {{ ofLabel() }} {{ totalPages() }}
+    </span>
+    <div class="flex gap-2">
+      <button hlmBtn type="button" variant="outline" [disabled]="currentPage() === 1" (click)="previous()">
+        ←
+      </button>
+      <button
+        hlmBtn
+        type="button"
+        variant="outline"
+        [disabled]="currentPage() === totalPages()"
+        (click)="next()"
+      >
+        →
+      </button>
+    </div>
+  </div>
+</section>

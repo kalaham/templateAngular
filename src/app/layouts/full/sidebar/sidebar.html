@@ -1,0 +1,100 @@
+<div hlmSidebarWrapper>
+  <hlm-sidebar
+    [variant]="layout.sidebarVariant()"
+    [collapsible]="layout.sidebarCollapsible()"
+    side="left"
+  >
+    <div hlmSidebarHeader>
+      <a
+        hlmSidebarMenuButton
+        size="lg"
+        routerLink="/starter"
+        [attr.aria-label]="layout.t('common.brandHome')"
+      >
+        <span
+          class="bg-sidebar-primary text-sidebar-primary-foreground flex size-8 items-center justify-center rounded-lg text-sm font-semibold"
+        >
+          {{ settings.name.slice(0, 1) }}
+        </span>
+        <span class="grid text-start leading-tight">
+          <span class="truncate font-medium">{{ settings.name }}</span>
+          <span class="text-muted-foreground truncate text-xs">{{ settings.description }}</span>
+        </span>
+      </a>
+    </div>
+
+    <div hlmSidebarContent>
+      @for (group of groups; track group.id) {
+        <div hlmSidebarGroup>
+          <div hlmSidebarGroupLabel>{{ layout.t(group.labelKey) }}</div>
+          <div hlmSidebarGroupContent>
+            <ul hlmSidebarMenu>
+              @for (item of group.items; track item.id) {
+                <li hlmSidebarMenuItem>
+                  @if (item.children) {
+                    <button
+                      hlmSidebarMenuButton
+                      type="button"
+                      [isActive]="isGroupOpen(item) && !!item.children.some((child) => isActive(child.route))"
+                      (click)="toggleGroup(item)"
+                    >
+                      @if (item.icon) {
+                        <ng-icon [name]="item.icon" />
+                      }
+                      <span>{{ layout.t(item.labelKey) }}</span>
+                    </button>
+                    @if (isGroupOpen(item)) {
+                      <ul hlmSidebarMenuSub>
+                        @for (child of item.children; track child.id) {
+                          <li hlmSidebarMenuSubItem>
+                            <a
+                              hlmSidebarMenuSubButton
+                              [routerLink]="child.route"
+                              [isActive]="isActive(child.route)"
+                            >
+                              <span>{{ layout.t(child.labelKey) }}</span>
+                            </a>
+                          </li>
+                        }
+                      </ul>
+                    }
+                  } @else {
+                    <a
+                      hlmSidebarMenuButton
+                      [routerLink]="item.route"
+                      routerLinkActive
+                      [isActive]="isActive(item.route)"
+                    >
+                      @if (item.icon) {
+                        <ng-icon [name]="item.icon" />
+                      }
+                      <span>{{ layout.t(item.labelKey) }}</span>
+                    </a>
+                  }
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div hlmSidebarFooter>
+      <div class="flex items-center gap-2 px-2 py-1">
+        <span
+          class="bg-muted text-foreground flex size-8 items-center justify-center rounded-full text-xs font-medium"
+        >
+          {{ settings.user.initials }}
+        </span>
+        <span class="grid text-start leading-tight group-data-[collapsible=icon]:hidden">
+          <span class="truncate text-sm font-medium">{{ settings.user.name }}</span>
+          <span class="text-muted-foreground truncate text-xs">{{ settings.user.email }}</span>
+        </span>
+      </div>
+    </div>
+
+    <button hlmSidebarRail type="button"></button>
+  </hlm-sidebar>
+
+  <ng-content />
+</div>

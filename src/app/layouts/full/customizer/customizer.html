@@ -1,0 +1,94 @@
+<hlm-sheet side="right" [state]="layout.customizerOpen() ? 'open' : 'closed'" (stateChanged)="onState($event)">
+  <hlm-sheet-content *hlmSheetPortal class="w-full sm:max-w-sm">
+    <div hlmSheetHeader>
+      <h2 hlmSheetTitle>{{ layout.t('customizer.title') }}</h2>
+      <p hlmSheetDescription>{{ layout.t('customizer.description') }}</p>
+    </div>
+
+    <div class="flex flex-col gap-5 px-4 pb-6">
+      <section class="flex flex-col gap-2">
+        <span class="text-sm font-medium">{{ layout.t('customizer.theme') }}</span>
+        <div class="grid grid-cols-3 gap-2">
+          @for (mode of themeModes; track mode) {
+            <button
+              hlmBtn
+              type="button"
+              [variant]="theme.mode() === mode ? 'default' : 'outline'"
+              (click)="theme.setMode(mode)"
+            >
+              {{ layout.t(themeKey(mode)) }}
+            </button>
+          }
+        </div>
+      </section>
+
+      <div hlmSeparator></div>
+
+      <section class="flex flex-col gap-2">
+        <span class="text-sm font-medium">{{ layout.t('customizer.color') }}</span>
+        <div class="flex flex-wrap gap-2">
+          @for (preset of theme.presets; track preset.id) {
+            <button
+              type="button"
+              class="ring-offset-background size-8 rounded-full ring-2 ring-transparent ring-offset-2"
+              [class.ring-foreground]="theme.colorId() === preset.id"
+              [style.background]="preset.swatch"
+              [attr.aria-label]="layout.t(preset.labelKey)"
+              (click)="theme.setColor(preset.id)"
+            ></button>
+          }
+        </div>
+      </section>
+
+      <div hlmSeparator></div>
+
+      <section class="flex flex-col gap-3">
+        <span class="text-sm font-medium">{{ layout.t('customizer.sidebar') }}</span>
+
+        <label class="flex flex-col gap-1.5 text-sm" hlmLabel>
+          {{ layout.t('customizer.variant') }}
+          <hlm-select [value]="layout.sidebarVariant()" (valueChange)="onVariant($event)">
+            <hlm-select-trigger class="w-full">
+              <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content *hlmSelectPortal>
+              @for (variant of variants; track variant) {
+                <hlm-select-item [value]="variant">{{ layout.t(variantKey(variant)) }}</hlm-select-item>
+              }
+            </hlm-select-content>
+          </hlm-select>
+        </label>
+
+        <label class="flex flex-col gap-1.5 text-sm" hlmLabel>
+          {{ layout.t('customizer.collapsible') }}
+          <hlm-select [value]="layout.sidebarCollapsible()" (valueChange)="onCollapsible($event)">
+            <hlm-select-trigger class="w-full">
+              <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content *hlmSelectPortal>
+              @for (mode of collapsibles; track mode) {
+                <hlm-select-item [value]="mode">{{ layout.t(collapsibleKey(mode)) }}</hlm-select-item>
+              }
+            </hlm-select-content>
+          </hlm-select>
+        </label>
+      </section>
+
+      <div hlmSeparator></div>
+
+      <label class="flex flex-col gap-1.5 text-sm" hlmLabel>
+        {{ layout.t('customizer.language') }}
+        <hlm-select [value]="layout.language()" (valueChange)="onLanguage($event)">
+          <hlm-select-trigger class="w-full">
+            <hlm-select-value />
+          </hlm-select-trigger>
+          <hlm-select-content *hlmSelectPortal>
+            @for (language of settings.languages; track language.code) {
+              <hlm-select-item [value]="language.code">{{ language.label }}</hlm-select-item>
+            }
+          </hlm-select-content>
+        </hlm-select>
+      </label>
+    </div>
+  </hlm-sheet-content>
+</hlm-sheet>

@@ -1,0 +1,38 @@
+<header class="flex flex-col gap-1">
+  <h1 class="text-2xl font-semibold tracking-tight">{{ layout.t('starter.title') }}</h1>
+  <p class="text-muted-foreground text-sm">{{ layout.t('starter.subtitle') }}</p>
+</header>
+
+<section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+  @for (kpi of kpis(); track kpi.label) {
+    <article hlmCard>
+      <p class="text-muted-foreground text-sm">{{ kpi.label }}</p>
+      <p class="text-2xl font-semibold tracking-tight">{{ kpi.value }}</p>
+      <p class="text-sm" [class.text-destructive]="kpi.delta.startsWith('-')" [class.text-emerald-600]="!kpi.delta.startsWith('-')">
+        {{ kpi.delta }}
+      </p>
+    </article>
+  }
+</section>
+
+<div class="grid gap-4 xl:grid-cols-5">
+  <div class="xl:col-span-2">
+    <app-chart-card
+      [title]="layout.t('starter.chart.title')"
+      [description]="layout.t('starter.chart.description')"
+      [points]="points()"
+    />
+  </div>
+  <div class="xl:col-span-3">
+    <app-data-table
+      [title]="layout.t('starter.table.title')"
+      [description]="layout.t('starter.table.description')"
+      [columns]="columns()"
+      [rows]="rows()"
+      [searchPlaceholder]="layout.t('table.search')"
+      [emptyLabel]="layout.t('table.empty')"
+      [pageLabel]="layout.t('table.page')"
+      [ofLabel]="layout.t('table.of')"
+    />
+  </div>
+</div>

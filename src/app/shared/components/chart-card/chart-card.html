@@ -1,0 +1,45 @@
+<section hlmCard>
+  <div class="grid gap-1">
+    <h2 hlmCardTitle>{{ title() }}</h2>
+    @if (description()) {
+      <p hlmCardDescription>{{ description() }}</p>
+    }
+  </div>
+
+  <div hlmCardContent>
+    @if (chart().coords.length) {
+      <svg
+        class="text-primary h-52 w-full"
+        [attr.viewBox]="'0 0 ' + chart().width + ' ' + chart().height"
+        role="img"
+        [attr.aria-label]="title()"
+      >
+        <line
+          [attr.x1]="16"
+          [attr.x2]="chart().width - 16"
+          [attr.y1]="chart().baseline"
+          [attr.y2]="chart().baseline"
+          class="stroke-border"
+          stroke-width="1"
+        />
+        <path [attr.d]="chart().area" class="fill-primary/15" />
+        <polyline
+          [attr.points]="chart().line"
+          fill="none"
+          class="stroke-primary"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        @for (point of chart().coords; track point.label) {
+          <circle [attr.cx]="point.x" [attr.cy]="point.y" r="4" class="fill-primary" />
+        }
+      </svg>
+      <div class="text-muted-foreground mt-2 grid text-center text-xs" [style.grid-template-columns]="'repeat(' + chart().coords.length + ', minmax(0, 1fr))'">
+        @for (point of chart().coords; track point.label) {
+          <span>{{ point.label }}</span>
+        }
+      </div>
+    }
+  </div>
+</section>
