@@ -1,9 +1,9 @@
 <header class="flex flex-col gap-1">
   <h1 class="text-2xl font-semibold tracking-tight">{{ layout.t('starter.title') }}</h1>
-  <p class="text-muted-foreground text-sm">{{ layout.t('starter.subtitle') }}</p>
+  <p class="text-muted-foreground text-sm gap-3">{{ layout.t('starter.subtitle') }}</p>
 </header>
 
-<section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+<section class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
   @for (kpi of kpis(); track kpi.label) {
     <article hlmCard>
       <p class="text-muted-foreground text-sm">{{ kpi.label }}</p>
@@ -15,7 +15,7 @@
   }
 </section>
 
-<div class="grid gap-4 xl:grid-cols-5">
+<div class="mt-4 grid gap-4 xl:grid-cols-5">
   <div class="xl:col-span-2">
     <app-chart-card
       [title]="layout.t('starter.chart.title')"
