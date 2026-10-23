@@ -66,13 +66,11 @@
     <p hlmCardDescription>{{ layout.t('ui.forms.description') }}</p>
   </div>
   <form class="grid gap-4 md:grid-cols-2" [formGroup]="form" (ngSubmit)="save()">
-    <div hlmField>
+    <app-floating-field>
       <label hlmFieldLabel for="showcase-name">{{ layout.t('ui.name') }}</label>
       <input hlmInput id="showcase-name" type="text" formControlName="name" autocomplete="name" />
-      @if (submitted() && form.controls.name.invalid) {
-        <hlm-field-error>{{ layout.t('ui.required') }}</hlm-field-error>
-      }
-    </div>
+      <hlm-field-error>{{ layout.t('ui.required') }}</hlm-field-error>
+    </app-floating-field>
 
     <div hlmField>
       <label hlmFieldLabel for="showcase-role">{{ layout.t('ui.role') }}</label>

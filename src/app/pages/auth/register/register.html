@@ -6,21 +6,17 @@
   </div>
 
   <form class="grid gap-4" [formGroup]="form" (ngSubmit)="submit()">
-    <div hlmField>
+    <app-floating-field>
       <label hlmFieldLabel for="register-name">{{ layout.t('auth.name') }}</label>
       <input hlmInput id="register-name" type="text" formControlName="name" autocomplete="name" />
-      @if (submitted() && form.controls.name.invalid) {
-        <hlm-field-error>{{ layout.t('ui.required') }}</hlm-field-error>
-      }
-    </div>
-    <div hlmField>
+      <hlm-field-error>{{ layout.t('ui.required') }}</hlm-field-error>
+    </app-floating-field>
+    <app-floating-field>
       <label hlmFieldLabel for="register-email">{{ layout.t('auth.email') }}</label>
       <input hlmInput id="register-email" type="email" formControlName="email" autocomplete="email" />
-      @if (submitted() && form.controls.email.invalid) {
-        <hlm-field-error>{{ layout.t('auth.invalidEmail') }}</hlm-field-error>
-      }
-    </div>
-    <div hlmField>
+      <hlm-field-error>{{ layout.t('auth.invalidEmail') }}</hlm-field-error>
+    </app-floating-field>
+    <app-floating-field>
       <label hlmFieldLabel for="register-password">{{ layout.t('auth.password') }}</label>
       <input
         hlmInput
@@ -29,10 +25,8 @@
         formControlName="password"
         autocomplete="new-password"
       />
-      @if (submitted() && form.controls.password.invalid) {
-        <hlm-field-error>{{ layout.t('auth.shortPassword') }}</hlm-field-error>
-      }
-    </div>
+      <hlm-field-error>{{ layout.t('auth.shortPassword') }}</hlm-field-error>
+    </app-floating-field>
     <button class="mt-4 w-fit justify-self-center" 
             hlmBtn 
             type="submit">

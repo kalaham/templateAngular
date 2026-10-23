@@ -12,11 +12,13 @@ import { HlmSelectImports } from '@spartan-ng/helm/select';
 import { HlmSwitchImports } from '@spartan-ng/helm/switch';
 import { LayoutService } from '../../core/services/layout.service';
 import { DataTable, type DataTableColumn, type DataTableRow } from '../../shared/components/data-table/data-table';
+import { FloatingField } from '../../shared/components/floating-field/floating-field';
 
 @Component({
   selector: 'app-ui-components',
   imports: [
     DataTable,
+    FloatingField,
     HlmAlertDialogImports,
     HlmAlertImports,
     HlmBadgeImports,
