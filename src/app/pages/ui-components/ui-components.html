@@ -60,7 +60,7 @@
   </article>
 </section>
 
-<section hlmCard>
+<section hlmCard class="mt-4">
   <div class="grid gap-1">
     <h2 hlmCardTitle>{{ layout.t('ui.forms') }}</h2>
     <p hlmCardDescription>{{ layout.t('ui.forms.description') }}</p>
@@ -104,8 +104,9 @@
     </div>
   </form>
 </section>
+<section class="mt-4">
 
-<app-data-table
+  <app-data-table
   [title]="layout.t('ui.table')"
   [description]="layout.t('ui.table.description')"
   [columns]="columns()"
@@ -114,4 +115,5 @@
   [emptyLabel]="layout.t('table.empty')"
   [pageLabel]="layout.t('table.page')"
   [ofLabel]="layout.t('table.of')"
-/>
+  />
+</section>
