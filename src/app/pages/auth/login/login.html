@@ -5,22 +5,32 @@
     <p hlmCardDescription>{{ layout.t('auth.login.subtitle') }}</p>
   </div>
 
-  <form class="grid gap-4" [formGroup]="form" (ngSubmit)="submit()">
+  <form class="grid gap-4 ml-6 mr-6" [formGroup]="form" (ngSubmit)="submit()">
     <div hlmField>
       <label hlmFieldLabel for="login-email">{{ layout.t('auth.email') }}</label>
-      <input hlmInput id="login-email" type="email" formControlName="email" autocomplete="username" />
+      <input hlmInput 
+             id="login-email" 
+             type="email" 
+             formControlName="email" 
+             autocomplete="username" />
       @if (submitted() && form.controls.email.invalid) {
         <hlm-field-error>{{ layout.t('auth.invalidEmail') }}</hlm-field-error>
       }
     </div>
     <div hlmField>
       <label hlmFieldLabel for="login-password">{{ layout.t('auth.password') }}</label>
-      <input hlmInput id="login-password" type="password" formControlName="password" autocomplete="current-password" />
+      <input hlmInput 
+             id="login-password" 
+             type="password" 
+             formControlName="password" 
+             autocomplete="current-password" />
       @if (submitted() && form.controls.password.invalid) {
         <hlm-field-error>{{ layout.t('auth.shortPassword') }}</hlm-field-error>
       }
     </div>
-    <button hlmBtn type="submit">{{ layout.t('auth.submitLogin') }}</button>
+    <button hlmBtn class="mt-4 w-fit justify-self-center" type="submit" size="sm">
+      {{ layout.t('auth.submitLogin') }}
+    </button>
   </form>
 
   <p class="text-muted-foreground text-center text-sm">
