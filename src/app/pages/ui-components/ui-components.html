@@ -58,6 +58,26 @@
       </hlm-alert-dialog-content>
     </hlm-alert-dialog>
   </article>
+
+  <article hlmCard class="gap-3">
+    <div class="grid gap-1">
+      <h2 hlmCardTitle>{{ layout.t('ui.floatingSelect') }}</h2>
+      <p hlmCardDescription>{{ layout.t('ui.floatingSelect.description') }}</p>
+    </div>
+    <app-floating-select>
+      <label hlmFieldLabel for="floating-role">{{ layout.t('ui.role') }}</label>
+      <hlm-select [value]="floatingRole()" (valueChange)="onFloatingRole($event)">
+        <hlm-select-trigger class="w-full" buttonId="floating-role">
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content *hlmSelectPortal>
+          <hlm-select-item value="admin">{{ layout.t('ui.role.admin') }}</hlm-select-item>
+          <hlm-select-item value="editor">{{ layout.t('ui.role.editor') }}</hlm-select-item>
+          <hlm-select-item value="viewer">{{ layout.t('ui.role.viewer') }}</hlm-select-item>
+        </hlm-select-content>
+      </hlm-select>
+    </app-floating-select>
+  </article>
 </section>
 
 <section hlmCard class="mt-4">

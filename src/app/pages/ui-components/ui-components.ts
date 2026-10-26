@@ -13,12 +13,14 @@ import { HlmSwitchImports } from '@spartan-ng/helm/switch';
 import { LayoutService } from '../../core/services/layout.service';
 import { DataTable, type DataTableColumn, type DataTableRow } from '../../shared/components/data-table/data-table';
 import { FloatingField } from '../../shared/components/floating-field/floating-field';
+import { FloatingSelect } from '../../shared/components/floating-select/floating-select';
 
 @Component({
   selector: 'app-ui-components',
   imports: [
     DataTable,
     FloatingField,
+    FloatingSelect,
     HlmAlertDialogImports,
     HlmAlertImports,
     HlmBadgeImports,
@@ -42,6 +44,7 @@ export class UiComponents {
     name: ['', Validators.required],
   });
   protected readonly role = signal('');
+  protected readonly floatingRole = signal('');
   protected readonly alerts = signal(true);
   protected readonly submitted = signal(false);
   protected readonly saved = signal(false);
@@ -68,6 +71,10 @@ export class UiComponents {
   protected onRole(value: unknown): void {
     this.role.set(typeof value === 'string' ? value : '');
     this.saved.set(false);
+  }
+
+  protected onFloatingRole(value: unknown): void {
+    this.floatingRole.set(typeof value === 'string' ? value : '');
   }
 
   protected save(): void {
