@@ -5,7 +5,7 @@
     <p hlmCardDescription>{{ layout.t('auth.register.subtitle') }}</p>
   </div>
 
-  <form class="grid gap-4" [formGroup]="form" (ngSubmit)="submit()">
+  <form class="grid gap-4 ml-6 mr-6" [formGroup]="form" (ngSubmit)="submit()">
     <app-floating-field>
       <label hlmFieldLabel for="register-name">{{ layout.t('auth.name') }}</label>
       <input hlmInput id="register-name" type="text" formControlName="name" autocomplete="name" />
